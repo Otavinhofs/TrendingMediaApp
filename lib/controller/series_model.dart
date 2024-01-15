@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:teste/model/movies_model.dart';
+import 'package:teste/model/series_model.dart';
 
 class SeriesController {
-  final ValueNotifier<List<MoviesModel>> state =
-      ValueNotifier<List<MoviesModel>>([]);
+  final ValueNotifier<List<SeriesModel>> state =
+      ValueNotifier<List<SeriesModel>>([]);
   final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
 
-  Future<void> fetchData(String apiUrl) async {
+  Future<void> fetchData(String apiUrl, List<dynamic> model) async {
     isLoading.value = true;
 
     try {
@@ -25,9 +26,8 @@ class SeriesController {
       if (response.statusCode == 200) {
         final dynamic decodedResponse = jsonDecode(response.body);
         final List<dynamic> results = decodedResponse['results'];
-
         state.value =
-            results.map((json) => MoviesModel.fromJson(json)).toList();
+            results.map((json) => SeriesModel.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load data - ${response.statusCode}');
       }

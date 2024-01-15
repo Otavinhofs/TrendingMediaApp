@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:teste/view/movies_view.dart';
+import 'package:teste/view/navigation_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: false,
       ),
-      home: const MoviesScreen(),
+      home: const NavigationPage(),
     );
   }
 }

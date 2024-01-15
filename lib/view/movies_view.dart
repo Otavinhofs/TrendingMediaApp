@@ -9,7 +9,7 @@ class MoviesScreen extends StatefulWidget {
 }
 
 class _MoviesScreenState extends State<MoviesScreen> {
-  final MoviesController _controller = MoviesController();
+  final SeriesController _controller = SeriesController();
 
   @override
   void initState() {
@@ -26,12 +26,14 @@ class _MoviesScreenState extends State<MoviesScreen> {
       appBar: AppBar(
         title: const Text(
           'Movies',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+              color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
         ),
+        elevation: 0,
         backgroundColor: Colors.white,
       ),
       body: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         width: size.width,
         child: AnimatedBuilder(
           animation: Listenable.merge(
@@ -70,7 +72,7 @@ Widget stateIsEmpty() {
   );
 }
 
-Widget screenSuccess(MoviesController store, Size size) {
+Widget screenSuccess(SeriesController store, Size size) {
   return SizedBox(
     width: size.width,
     child: ListView.separated(
@@ -85,7 +87,7 @@ Widget screenSuccess(MoviesController store, Size size) {
   );
 }
 
-Widget moviesView(MoviesController store, index, Size size) {
+Widget moviesView(SeriesController store, index, Size size) {
   final item = store.state.value[index];
 
   return Card(
@@ -99,7 +101,22 @@ Widget moviesView(MoviesController store, index, Size size) {
             children: [
               Image(
                 image: NetworkImage(
-                    'https://image.tmdb.org/t/p/w500/${item.posterPath}'),
+                  'https://image.tmdb.org/t/p/w500/${item.posterPath}',
+                ),
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
                 height: 170,
                 width: 120,
               ),

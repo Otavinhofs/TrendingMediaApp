@@ -1,29 +1,29 @@
 import 'package:teste/settings.dart';
 
-class MoviesModel {
-  final String title;
+class SeriesModel {
+  final String name;
   final String overview;
   final int voteCount;
-  final String releasDate;
+  final String firstAirDate;
   final double voteAverage;
   final String posterPath;
-  final Type type = Type.movie;
+  final Type type = Type.serie;
 
-  MoviesModel({
-    required this.title,
+  SeriesModel({
+    required this.name,
     required this.overview,
     required this.voteCount,
-    required this.releasDate,
+    required this.firstAirDate,
     required this.voteAverage,
     required this.posterPath,
   });
 
-  factory MoviesModel.fromJson(Map<String, dynamic> json) {
-    return MoviesModel(
-      title: json['title'] ?? '',
+  factory SeriesModel.fromJson(Map<String, dynamic> json) {
+    return SeriesModel(
+      name: json['name'] ?? '',
       overview: json['overview'] ?? '',
       voteCount: json['vote_count'] ?? 0,
-      releasDate: json['release_date'] ?? '',
+      firstAirDate: json['first_air_date'] ?? '',
       voteAverage: json['vote_average'] * 1.0,
       posterPath: json['poster_path'] ?? '',
     );
